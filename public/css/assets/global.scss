@@ -1,0 +1,278 @@
+$aside-width: 220;
+$base-header-colour: #545454;
+$base-body-text-colour: #14202C;
+$base-body-bg-colour: #a0a0a0;
+$base-alt-colour: #676767;
+$base-link-colour: #676767;
+$base-error-colour: #be1e2d;
+$base-padding: 20px;
+$base-font-size: 14px;
+$nav-background: #337AB7;
+$brand-colour: #8BC8FF;
+$base-hover-colour: #FF3612;
+$month-colour: #FF3612;
+
+@function calculateRem($size) {
+  $remSize: $size / $base-font-size;
+  @return $remSize * 1rem;
+}
+
+//mixin to create font size in rems but with px fallback
+@mixin font-size($size) {
+  font-size: $size;
+  font-size: calculateRem($size);
+}
+
+//mixin to create line height in rems but with px fallback
+@mixin line-height($heightValue: 12 ){
+  line-height: $heightValue + px; //fallback for old browsers
+  line-height: (0.125 * $heightValue) + rem;
+}
+
+//mixin to create cross browser border radius 
+@mixin border-radius($radius) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+  background-clip: padding-box;  /* stops bg color from leaking outside the border: */
+}
+
+//mixin to create cross browser border radius with different values 
+@mixin border-radius-mixed($topright, $bottomright, $bottomleft, $topleft) {
+  -webkit-border-top-left-radius: $topleft;
+  -webkit-border-top-right-radius: $topright;
+  -webkit-border-bottom-right-radius: $bottomright;
+  -webkit-border-bottom-left-radius: $bottomleft;
+  -moz-border-radius-topleft: $topleft;
+  -moz-border-radius-topright: $topright;
+  -moz-border-radius-bottomright: $bottomright;
+  -moz-border-radius-bottomleft: $bottomleft;
+  border-top-left-radius: $topleft;
+  border-top-right-radius: $topright;
+  border-bottom-right-radius: $bottomright;
+  border-bottom-left-radius: $bottomleft;
+  background-clip: padding-box;  /* stops bg color from leaking outside the border: */
+}
+
+//mixin to create cross browser opacity
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+@mixin box-shadow($left:0, $top:0, $blur:0, $color:#000, $spread:"", $inset:"") {
+  -webkit-box-shadow: $left $top $blur #{$spread} $color #{$inset};
+  -moz-box-shadow: $left $top $blur #{$spread} $color #{$inset};
+  box-shadow: $left $top $blur #{$spread} $color #{$inset};
+}
+
+@mixin box-shadow-none($none: none) {
+  -webkit-box-shadow: $none;
+  -moz-box-shadow: $none;
+  box-shadow: $none;
+}
+
+/* HTML/Body */
+html {
+  font-size: $base-font-size;
+}
+body {
+  background: $base-body-bg-colour;
+  color: $base-body-text-colour;
+  line-height: 1.428;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Patua One', cursive;
+  text-transform: uppercase;
+  margin-top: 0px;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: $base-body-text-colour;
+}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+  color: $base-hover-colour;
+  text-decoration: none;
+  
+}
+/* General */
+.social {
+  display: inline-block;
+  padding: 10px 0 10px 40px;
+  &.Facebook {
+    background: url(../../images/Facebook.png) no-repeat 0 0;
+  }
+  &.Twitter {
+    background: url(../../images/Twitter.png) no-repeat 0 0;
+  }
+  &.Google {
+    background: url(../../images/Google.png) no-repeat 0 0;
+  }
+}
+.desc {
+  font-style: italic;
+  @include font-size(10px);
+  color: lighten($base-body-text-colour,50%);
+}
+.seperator {
+    margin-bottom: ($base-padding / 2);
+    border-bottom: 1px solid $brand-colour;
+  }
+.navbar {
+  background: $brand-colour;
+  min-height: 53px;
+  @include box-shadow(1px,1px,5px,#000);
+  a {
+    color: $base-body-text-colour !important;
+    font-family: 'Patua One', cursive;
+		:hover {
+			color: $base-hover-colour !important;
+		}
+  }	
+  .navbar-brand {
+    background: url(../../images/bear_logo_sans_text_small.png) no-repeat 0 0;
+    padding-left: 72px;
+    text-transform: uppercase;
+  }
+	
+}
+.navbar-nav > li > a {
+		padding-left: 0;
+}
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
+	color: $base-hover-colour !important;
+}
+.panel-default > .panel-heading {
+  background: $brand-colour;
+}
+.panel {
+  h4 {
+    margin-top: ($base-padding / 2);
+  }
+  .panel-announcement {
+    background: url(../../images/announcement.png) no-repeat 4% 33%;
+    padding-left: 12%;
+  }
+  &.home-panel {
+    height: 200px;
+    overflow: hidden;
+  }
+	&.news-panel {
+    height: 190px;
+    overflow: hidden;
+  }
+  .home-panel {
+    height: 200px;
+    overflow: auto;
+  }
+  .overflow {
+    height: 100px;
+    overflow: auto;
+  }
+  .flexslider {
+     @include box-shadow-none();
+     border: none;
+     @include border-radius(0px);
+  }
+  &.slider-panel {
+    height: 360px;
+    overflow: hidden;
+  }
+  ul {
+    padding: 0;
+    list-style-type: none;
+  }
+  .home-event {
+    margin-bottom: ($base-padding / 2);
+    border-bottom: 1px solid $brand-colour;
+  }
+}
+/* FLEXSLIDER */
+.flex-direction-nav a {
+  height: 45px;
+}
+.carousel-control.right {
+  right: 15px;
+}
+.carousel-control.left {
+  left: 15px;
+}
+.message {
+  padding: $base-padding;
+  font-weight: bold;
+}
+.address {
+  font-weight: italic;
+  display: inline;
+  color: lighten($base-body-text-colour,25%);
+  @include font-size(11px);
+}
+.main-content {
+  background: #fff;
+  padding: $base-padding;
+}
+
+/* Form Validation Error */
+.error {
+	color: #fff;
+	display: none;
+	@include font-size(11px);
+	height: 20px;
+	padding: 2px 10px 2px;
+	@include border-radius(5px);
+	z-index: 99;
+	@include box-shadow(1px,1px,7px,#A3A3A3,1px);
+	background: $base-error-colour;
+}
+.error:after {
+	content:'';
+	background: url(../../images/error.png) no-repeat 0 0;
+	width:21px;
+	height:14px;
+	position:absolute;
+	bottom:-14px;
+	left:14px;
+}
+
+/* Breadcrumb */
+
+/* Members Area */
+.members {
+  .active {
+    background: $nav-background;
+    color: #fff;
+    &:hover {
+      background: lighten($nav-background,10%) !important;
+    }
+  }
+  .home {
+    background: darken($nav-background,20%);
+    color: #fff !important;
+    &:hover {
+      background: darken($nav-background,10%) !important;
+    }
+  }
+  .children {
+    background: lighten($nav-background,35%);
+    &:hover {
+      background: lighten($nav-background,45%) !important;
+    }
+  }
+}
+
+h3.month {
+	color: $month-colour;
+}
+
+/* Aside */
+.aside {
+	a.list-group-item {
+		background: $brand-colour;
+		color: #000;
+		font-family: "Patua One",cursive;
+		margin-bottom: 1px;
+	}
+	:hover {
+		color: $base-hover-colour !important;
+	}
+}	
